@@ -104,7 +104,7 @@ public class DivisaService {
                 .findByMonedaOrigenAndMonedaDestinoOrderByFechaConsultaDesc(
                         origen.toUpperCase(), destino.toUpperCase())
                 .stream()
-                .map(h -> new HistorialItemDTO(h.getFechaConsulta(), h.getTasaCambio()))
+                .map(h -> new HistorialItemDTO(h.getFechaConsulta(), h.getTasa()))
                 .collect(Collectors.toList());
     }
 }

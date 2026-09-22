@@ -18,14 +18,14 @@ public class HistorialConversion {
     @Column(name = "moneda_destino", nullable = false, length = 3)
     private String monedaDestino;
 
-    @Column(name = "monto_solicitado", nullable = false, precision = 15, scale = 2)
-    private BigDecimal montoSolicitado;
+    @Column(name = "monto", nullable = false, precision = 15, scale = 2)
+    private BigDecimal monto;
 
     @Column(name = "monto_convertido", nullable = false, precision = 15, scale = 2)
     private BigDecimal montoConvertido;
 
-    @Column(name = "tasa_cambio", nullable = false, precision = 15, scale = 6)
-    private BigDecimal tasaCambio;
+    @Column(name = "tasa", nullable = false, precision = 15, scale = 6)
+    private BigDecimal tasa;
 
     @Column(name = "fecha_consulta", nullable = false)
     private LocalDateTime fechaConsulta;
@@ -33,13 +33,13 @@ public class HistorialConversion {
     public HistorialConversion() {}
 
     public HistorialConversion(String monedaOrigen, String monedaDestino,
-                                BigDecimal montoSolicitado, BigDecimal montoConvertido,
-                                BigDecimal tasaCambio, LocalDateTime fechaConsulta) {
+                                BigDecimal monto, BigDecimal montoConvertido,
+                                BigDecimal tasa, LocalDateTime fechaConsulta) {
         this.monedaOrigen = monedaOrigen;
         this.monedaDestino = monedaDestino;
-        this.montoSolicitado = montoSolicitado;
+        this.monto = monto;
         this.montoConvertido = montoConvertido;
-        this.tasaCambio = tasaCambio;
+        this.tasa = tasa;
         this.fechaConsulta = fechaConsulta;
     }
 
@@ -48,12 +48,12 @@ public class HistorialConversion {
     public void setMonedaOrigen(String m) { this.monedaOrigen = m; }
     public String getMonedaDestino() { return monedaDestino; }
     public void setMonedaDestino(String m) { this.monedaDestino = m; }
-    public BigDecimal getMontoSolicitado() { return montoSolicitado; }
-    public void setMontoSolicitado(BigDecimal m) { this.montoSolicitado = m; }
+    public BigDecimal getMonto() { return monto; }
+    public void setMonto(BigDecimal m) { this.monto = m; }
     public BigDecimal getMontoConvertido() { return montoConvertido; }
     public void setMontoConvertido(BigDecimal m) { this.montoConvertido = m; }
-    public BigDecimal getTasaCambio() { return tasaCambio; }
-    public void setTasaCambio(BigDecimal t) { this.tasaCambio = t; }
+    public BigDecimal getTasa() { return tasa; }
+    public void setTasa(BigDecimal t) { this.tasa = t; }
     public LocalDateTime getFechaConsulta() { return fechaConsulta; }
     public void setFechaConsulta(LocalDateTime f) { this.fechaConsulta = f; }
 }
