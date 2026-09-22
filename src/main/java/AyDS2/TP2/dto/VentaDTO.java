@@ -14,7 +14,6 @@ public class VentaDTO {
     @Positive(message = "El precio unitario debe ser mayor a 0")
     private double precioUnitario;
 
-    // Constructor vacío (Spring lo necesita para "armar" el objeto desde el JSON)
     public VentaDTO() {
     }
 
@@ -24,7 +23,6 @@ public class VentaDTO {
         this.precioUnitario = precioUnitario;
     }
 
-    // Getters y setters (Spring los necesita para leer/escribir cada campo)
     public String getProducto() {
         return producto;
     }
@@ -49,7 +47,6 @@ public class VentaDTO {
         this.precioUnitario = precioUnitario;
     }
 
-    // Método de conveniencia: el "importe" de esta venta puntual
     public double getImporte() {
         return cantidad * precioUnitario;
     }

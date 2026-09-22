@@ -79,10 +79,8 @@ public class DivisaService {
     @Transactional
     public ConversionDTO consultarYGuardar(double monto, String origen, String destino) {
 
-        // Reutilizamos el método de arriba
         ConversionDTO conversion = convertir(monto, origen, destino);
 
-        // Guardamos en la BD
         HistorialConversion historial = new HistorialConversion(
                 conversion.getMonedaOrigen(),
                 conversion.getMonedaDestino(),

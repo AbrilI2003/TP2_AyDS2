@@ -18,7 +18,6 @@ public class CatalogoService {
     private final List<Producto> productos = new ArrayList<>();
     private final AtomicLong idGenerator = new AtomicLong(1);
 
-    // Este bloque se ejecuta una sola vez, cuando Spring crea este bean al arrancar
     public CatalogoService() {
         productos.add(new Producto(idGenerator.getAndIncrement(), "Mouse inalambrico", "Perifericos", 4500.0, 20));
         productos.add(new Producto(idGenerator.getAndIncrement(), "Teclado mecanico", "Perifericos", 25000.0, 10));

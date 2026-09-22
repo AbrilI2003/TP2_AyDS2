@@ -12,7 +12,6 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    // Getters (Spring los necesita para convertir esto a JSON)
     public int getStatus() {
         return status;
     }

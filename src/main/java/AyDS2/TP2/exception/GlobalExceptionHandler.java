@@ -14,7 +14,6 @@ import AyDS2.TP2.dto.ApiResponse;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Se dispara automáticamente cuando @Valid encuentra datos inválidos
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<Object>> handleValidationErrors(MethodArgumentNotValidException ex) {
 
@@ -33,7 +32,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
     }
 
-    // Para cualquier otro error no controlado (red de seguridad)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Object>> handleGenericError(Exception ex) {
 
