@@ -46,7 +46,7 @@ public class VentaDTO {
     public void setPrecioUnitario(double precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
-
+    
     public double getImporte() {
         return cantidad * precioUnitario;
     }
