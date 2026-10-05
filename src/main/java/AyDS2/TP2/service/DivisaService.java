@@ -32,7 +32,28 @@ public class DivisaService {
         this.historialRepository = historialRepository;
     }
 
+    private void validarMonto(double monto) {
+        if (monto <= 0) {
+            throw new IllegalArgumentException("El monto debe ser mayor que 0");
+        }
+    }
+
+    private void validarMonedas(String origen, String destino) {
+        if (origen == null || !origen.matches("[A-Za-z]{3}")) {
+            throw new IllegalArgumentException(
+                    "El código de moneda de origen debe tener 3 letras");
+        }
+        if (destino == null || !destino.matches("[A-Za-z]{3}")) {
+            throw new IllegalArgumentException(
+                    "El código de moneda de destino debe tener 3 letras");
+        }
+    }
+
+
     public ConversionDTO convertir(double monto, String origen, String destino) {
+
+        validarMonto(monto);
+        validarMonedas(origen, destino);
 
         String origenNormalizado = origen.toUpperCase();
         String destinoNormalizado = destino.toUpperCase();
@@ -76,6 +97,7 @@ public class DivisaService {
         );
     }
 
+
     @Transactional
     public ConversionDTO consultarYGuardar(double monto, String origen, String destino) {
 
@@ -95,11 +117,14 @@ public class DivisaService {
         return conversion;
     }
 
+
     @Transactional(readOnly = true)
     public List<HistorialItemDTO> obtenerHistorial(String origen, String destino) {
 
+        validarMonedas(origen, destino);
+
         return historialRepository
-                .findByMonedaOrigenAndMonedaDestinoOrderByFechaConsultaDesc(
+                .buscarHistorial(
                         origen.toUpperCase(), destino.toUpperCase())
                 .stream()
                 .map(h -> new HistorialItemDTO(h.getFechaConsulta(), h.getTasa()))
