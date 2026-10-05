@@ -2,20 +2,23 @@ package AyDS2.TP2.exception;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
-import AyDS2.TP2.dto.ApiResponse;
+import AyDS2.TP2.dto.ApiResponseDTO;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponse<Object>> handleValidationErrors(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ApiResponseDTO<Object>> handleValidationErrors(MethodArgumentNotValidException ex) {
 
         List<String> errores = new ArrayList<>();
 
@@ -23,7 +26,7 @@ public class GlobalExceptionHandler {
             errores.add(error.getField() + ": " + error.getDefaultMessage());
         });
 
-        ApiResponse<Object> respuesta = new ApiResponse<>(
+        ApiResponseDTO<Object> respuesta = new ApiResponseDTO<>(
                 400,
                 "Error de validación en los datos enviados",
                 errores
@@ -33,9 +36,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<Object>> handleGenericError(Exception ex) {
+    public ResponseEntity<ApiResponseDTO<Object>> handleGenericError(Exception ex) {
 
-        ApiResponse<Object> respuesta = new ApiResponse<>(
+        ApiResponseDTO<Object> respuesta = new ApiResponseDTO<>(
                 500,
                 "Ocurrió un error interno: " + ex.getMessage(),
                 null
@@ -45,42 +48,36 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ApiResponse<Object>> handleIllegalArgument(IllegalArgumentException ex) {
+    public ResponseEntity<ApiResponseDTO<Object>> handleIllegalArgument(IllegalArgumentException ex) {
 
-        ApiResponse<Object> respuesta = new ApiResponse<>(400, ex.getMessage(), null);
+        ApiResponseDTO<Object> respuesta = new ApiResponseDTO<>(400, ex.getMessage(), null);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
     }
 
     @ExceptionHandler(ProductoNoEncontradoException.class)
-    public ResponseEntity<ApiResponse<Object>> handleProductoNoEncontrado(ProductoNoEncontradoException ex) {
+    public ResponseEntity<ApiResponseDTO<Object>> handleProductoNoEncontrado(ProductoNoEncontradoException ex) {
 
-        ApiResponse<Object> respuesta = new ApiResponse<>(404, ex.getMessage(), null);
+        ApiResponseDTO<Object> respuesta = new ApiResponseDTO<>(404, ex.getMessage(), null);
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
     }
 
     @ExceptionHandler(ExternalApiException.class)
-    public ResponseEntity<ApiResponse<Object>> handleExternalApiError(ExternalApiException ex) {
+    public ResponseEntity<ApiResponseDTO<Object>> handleExternalApiError(ExternalApiException ex) {
 
-        ApiResponse<Object> respuesta = new ApiResponse<>(502, ex.getMessage(), null);
+        ApiResponseDTO<Object> respuesta = new ApiResponseDTO<>(502, ex.getMessage(), null);
 
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(respuesta);
     }
 
-    @ExceptionHandler(jakarta.validation.ConstraintViolationException.class)
-    public ResponseEntity<ApiResponse<Object>> handleConstraintViolation(jakarta.validation.ConstraintViolationException ex) {
+    
+@ExceptionHandler(EmailYaRegistradoException.class)
+    public ResponseEntity<ApiResponseDTO<Object>> handleEmailDuplicado(EmailYaRegistradoException ex) {
 
-        ApiResponse<Object> respuesta = new ApiResponse<>(400, ex.getMessage(), null);
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
-    }
-
-    @ExceptionHandler(EmailYaRegistradoException.class)
-    public ResponseEntity<ApiResponse<Object>> handleEmailDuplicado(EmailYaRegistradoException ex) {
-
-        ApiResponse<Object> respuesta = new ApiResponse<>(400, ex.getMessage(), null);
+        ApiResponseDTO<Object> respuesta = new ApiResponseDTO<>(400, ex.getMessage(), null);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
     }
+
 }
